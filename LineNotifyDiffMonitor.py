@@ -95,6 +95,8 @@ while True:
     for key in coins:
         if coins[key].willingtomonitor == True :
             print("Coin notify : "+coins[key].name)
+            print("Time scan :"+timescan+" sec")
+            print("date : "+datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
             if float(coins[key].difficulty) <= float(coins[key].targetDiff) :
                 print(coins[key].difficulty)
                 print(coins[key].targetDiff)
