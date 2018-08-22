@@ -1,6 +1,8 @@
 # LineNotifyDiffMonitor
 -ดาวน์โหลด Python3: https://www.python.org/downloads
+
 -ใน File config.config: True = แจ้งเตือน False = ไม่แจ้งเตือน
+
 -ติดตั้ง line_notify
 > pip install line_notify
 
