@@ -9,8 +9,8 @@ class Coin:
     def __init__(self, name):
 
         self.willingtomonitor = False
-        self.targetDiff = 9999999
-        self.difficulty = 9999999
+        self.targetDiff = 9999999.0
+        self.difficulty = 9999999.0
         self.name = name
 
 coins = {}
@@ -33,7 +33,7 @@ for key in coins:
 # Read target diff to notify
 for key in coins:
     try:
-        coins[key].targetDiff = Config.getboolean('targetDifficult','tarDiff'+key)
+        coins[key].targetDiff = Config.get('targetDifficult','tarDiff'+key)
     except:
         continue
 
@@ -64,7 +64,6 @@ def getDiffApiETH():
     key = 'eth'
     class AppURLopener(urllib.request.FancyURLopener):
         version = "Mozilla/5.0"
-
     opener = AppURLopener()
     response = opener.open('https://api.ethermine.org/networkStats')
     apiDiff = json.load(response)
@@ -77,7 +76,6 @@ def getDiffApiETC():
     key = 'etc'
     class AppURLopener(urllib.request.FancyURLopener):
         version = "Mozilla/5.0"
-
     opener = AppURLopener()
     response = opener.open('https://api-etc.ethermine.org/networkStats')
     apiDiff = json.load(response)
@@ -91,12 +89,17 @@ notify = LineNotify(ACCESS_TOKEN)
 
 
 while True:
+    getDiffApiRVN()
+    #getDiffApiETH()
+    #getDiffApiETC()
     for key in coins:
         if coins[key].willingtomonitor == True :
-            if coins[key].difficulty <= coins[key].targetDiff :
-                getDiffApiRVN()
+            print("Coin notify : "+coins[key].name)
+            if float(coins[key].difficulty) <= float(coins[key].targetDiff) :
+                print(coins[key].difficulty)
+                print(coins[key].targetDiff)
                 notify.send(key+" Diff: "+str(coins[key].difficulty))
-                tmin = int(timescan) / 60
+                #tmin = int(timescan) / 60
                 #notify.send("time scan : " + str(timescan) + " sec = " + str(tmin) + " min ")
                 #notify.send("date: "+datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
 
